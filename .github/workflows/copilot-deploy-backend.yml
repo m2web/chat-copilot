@@ -36,10 +36,6 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
-        with:
-          clean: true
-
       - uses: actions/download-artifact@v3
         with:
           name: ${{inputs.ARTIFACT_NAME}}

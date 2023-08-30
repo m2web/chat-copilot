@@ -31,6 +31,11 @@ jobs:
       artifact: ${{steps.artifactoutput.outputs.artifactname}}
 
     steps:
+      - uses: actions/checkout@v3
+        with:
+          clean: true
+          fetch-depth: 0
+
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0
         with:
