@@ -21,7 +21,7 @@ on:
     outputs:
       backend-host:
         description: "Host on which backend runs"
-        value: ${{jobs.deploy-backend.outputs.web-host}}
+        value: ${{jobs.deploy-backend.outputs.backend-host}}
 
 permissions:
   contents: read

@@ -20,9 +20,9 @@ on:
       AZURE_SUBSCRIPTION_ID:
         required: true
     outputs:
-      web-host:
+      backend-host:
         description: "Host to which backend is deployed"
-        value: ${{jobs.webapi.outputs.web-host}}
+        value: ${{jobs.webapi.outputs.backend-host}}
 
 permissions:
   contents: read
@@ -37,6 +37,9 @@ jobs:
       matrix:
         include:
           - { dotnet: "6.0", configuration: Release, os: ubuntu-latest }
+    # Map the job output to step output
+    outputs:
+      backend-host: ${{steps.app-name.outputs.backend-host}}
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -62,7 +65,7 @@ jobs:
         run: |
           WEB_APP_NAME=$(az deployment group show --name ${{inputs.DEPLOYMENT_NAME}} --resource-group ${{vars.CC_DEPLOYMENT_GROUP_NAME}} --output json | jq -r '.properties.outputs.webapiName.value')
           echo "AZURE_WEBAPP_NAME=$WEB_APP_NAME" >> $GITHUB_ENV
-          echo "web-host=$WEB_APP_NAME" >> $GITHUB_OUTPUT
+          echo "backend-host=$WEB_APP_NAME" >> $GITHUB_OUTPUT
 
       - name: Enable Run From Package
         uses: azure/CLI@v1
