@@ -22,7 +22,7 @@ on:
     outputs:
       web-host:
         description: "Host to which backend is deployed"
-        value: ${{jobs.app-name.outputs.web-host}}
+        value: ${{jobs.webapi.outputs.web-host}}
 
 permissions:
   contents: read
