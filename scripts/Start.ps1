@@ -16,14 +16,9 @@ $envFilePath = Join-Path $PSScriptRoot '..\webapp\.env'
 $envContent = Get-Content -Path $envFilePath
 $port = [regex]::Match($envContent, ':(\d+)/').Groups[1].Value
 
-# set max retries to 5
 $maxRetries = 5
-
-# set retry count to 0
 $retryCount = 0
-
-# set the number of seconds to wait before retrying
-$retryWait = 5
+$retryWait = 5 # set the number of seconds to wait before retrying
 
 # check if the backend is running and check if the retry count is less than the max retries
 while ($backendRunning -eq $false -and $retryCount -lt $maxRetries) {
@@ -36,12 +31,11 @@ while ($backendRunning -eq $false -and $retryCount -lt $maxRetries) {
 if ($backendRunning -eq $true) {
   # Start frontend (in current PS process)
   & $FrontendScript
-}
-else { 
+} else { 
   # otherwise, write to the console that the backend is not running and we have exceeded the number of retries and we are exiting
   Write-Host "*************************************************"
   Write-Host "Backend is not running and we have exceeded "
-  Write-Host "the number of retries."
+  Write-Host "the maximum number of retries."
   Write-Host ""
   Write-Host "Therefore, we are exiting."
   Write-Host "*************************************************"
